@@ -14,7 +14,10 @@ public class ProductsEntityConfiguration : IEntityTypeConfiguration<Product>
     {
         builder.ToTable(tableName);
 
-        builder.HasKey(p => p.Id);
+        builder.HasKey(p => p.Id)
+               .HasName("PK_Products");
+        builder.Property(p => p.Id)
+               .HasColumnOrder(columnOrder++);
 
         builder.Property(p => p.Status)
                .HasColumnOrder(columnOrder++)
