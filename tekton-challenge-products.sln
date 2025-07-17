@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{30AFD3A0-925A-4511-8B7E-8A892E95AB44}"
 EndProject
@@ -12,6 +12,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TektonChallengeProducts.Api", "src\Api\TektonChallengeProducts.Api.csproj", "{286895F7-276B-4FCE-929E-6F3F46E86733}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TektonChallengeProducts.Infrastructure", "src\Infrastructure\TektonChallengeProducts.Infrastructure.csproj", "{862E5AC4-3641-407D-8857-4840A61E9772}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0AB3BF05-4346-4AA6-1389-037BE0695223}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{B611CC27-D592-8FDF-F9F1-D39D131BCC02}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TektonChallengeProducts.Application.Tests", "tests\Application\TektonChallengeProducts.Application.Tests.csproj", "{22930EF5-CED8-47D6-9F7A-F58BEE269E8C}"
 EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
@@ -74,11 +80,28 @@ Global
 		{862E5AC4-3641-407D-8857-4840A61E9772}.Release|x64.Build.0 = Release|Any CPU
 		{862E5AC4-3641-407D-8857-4840A61E9772}.Release|x86.ActiveCfg = Release|Any CPU
 		{862E5AC4-3641-407D-8857-4840A61E9772}.Release|x86.Build.0 = Release|Any CPU
+		{22930EF5-CED8-47D6-9F7A-F58BEE269E8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22930EF5-CED8-47D6-9F7A-F58BEE269E8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22930EF5-CED8-47D6-9F7A-F58BEE269E8C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{22930EF5-CED8-47D6-9F7A-F58BEE269E8C}.Debug|x64.Build.0 = Debug|Any CPU
+		{22930EF5-CED8-47D6-9F7A-F58BEE269E8C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{22930EF5-CED8-47D6-9F7A-F58BEE269E8C}.Debug|x86.Build.0 = Debug|Any CPU
+		{22930EF5-CED8-47D6-9F7A-F58BEE269E8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22930EF5-CED8-47D6-9F7A-F58BEE269E8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22930EF5-CED8-47D6-9F7A-F58BEE269E8C}.Release|x64.ActiveCfg = Release|Any CPU
+		{22930EF5-CED8-47D6-9F7A-F58BEE269E8C}.Release|x64.Build.0 = Release|Any CPU
+		{22930EF5-CED8-47D6-9F7A-F58BEE269E8C}.Release|x86.ActiveCfg = Release|Any CPU
+		{22930EF5-CED8-47D6-9F7A-F58BEE269E8C}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C7B2D45D-E25F-4E61-8822-A6CEFC91F18E} = {30AFD3A0-925A-4511-8B7E-8A892E95AB44}
 		{C5D62943-341C-414B-9AC7-8DD02A3EF859} = {30AFD3A0-925A-4511-8B7E-8A892E95AB44}
 		{286895F7-276B-4FCE-929E-6F3F46E86733} = {30AFD3A0-925A-4511-8B7E-8A892E95AB44}
 		{862E5AC4-3641-407D-8857-4840A61E9772} = {30AFD3A0-925A-4511-8B7E-8A892E95AB44}
+		{B611CC27-D592-8FDF-F9F1-D39D131BCC02} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
+		{22930EF5-CED8-47D6-9F7A-F58BEE269E8C} = {B611CC27-D592-8FDF-F9F1-D39D131BCC02}
 	EndGlobalSection
 EndGlobal
