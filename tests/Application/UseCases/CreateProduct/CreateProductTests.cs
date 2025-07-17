@@ -3,9 +3,10 @@ namespace TektonChallengeProducts.Application.Tests.UseCases.CreateProduct;
 using Moq;
 using NUnit.Framework;
 using Application.UseCases.CreateProduct;
-using Domain.Entities;
+using Application.UseCases.Validators;
 using Domain.Abstractions.Persistence;
-using TektonChallengeProducts.Domain.Enums;
+using Domain.Enums;
+using Domain.Entities;
 
 [TestFixture]
 public class CreateProductTests
@@ -30,8 +31,10 @@ public class CreateProductTests
         mockUnitOfWork.Setup(unit => unit.CommitAsync(It.IsAny<CancellationToken>()))
                       .ReturnsAsync(1);
 
-        var handler = new CreateProductCommandHandler(mockProductRepository.Object);
+        var validator = new CreateOrUpdateProductCommandValidator();
         var command = new CreateProductCommand(Status.Active, 10, "desc", 100);
+
+        var handler = new CreateProductCommandHandler(mockProductRepository.Object, validator);
 
         // Act
         var result = await handler.Handle(command, default);
