@@ -2,6 +2,7 @@ namespace TektonChallengeProducts.Application.UseCases.CreateProduct;
 
 using FluentValidation;
 using MediatR;
+using Application.Resources;
 using Domain.Abstractions.Persistence;
 using Domain.Entities;
 
@@ -24,7 +25,7 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
         if (!validationResult.IsValid)
         {
             var errors = string.Join("; ", validationResult.Errors.Select(e => e.ErrorMessage));
-            throw new ValidationException($"Errores de validación: {errors}");
+            throw new ValidationException($"{ValidationMessagesResources.ValidationErrors}: {errors}");
         }
 
         decimal discountPercentage = 10;

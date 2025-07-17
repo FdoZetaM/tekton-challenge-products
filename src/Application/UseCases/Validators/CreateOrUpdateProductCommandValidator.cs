@@ -1,6 +1,7 @@
 namespace TektonChallengeProducts.Application.UseCases.Validators;
 
 using FluentValidation;
+using Application.Resources;
 using Application.UseCases.CreateProduct;
 
 public class CreateOrUpdateProductCommandValidator : AbstractValidator<CreateProductCommand>
@@ -9,13 +10,13 @@ public class CreateOrUpdateProductCommandValidator : AbstractValidator<CreatePro
     {
         RuleFor(x => x.Stock)
             .GreaterThanOrEqualTo(0)
-            .WithMessage("El stock no puede ser negativo.");
+            .WithMessage(ValidationMessagesResources.StockCantBeNegative);
 
         RuleFor(x => x.Description)
-            .NotEmpty().WithMessage("La descripción es obligatoria.")
-            .MaximumLength(500).WithMessage("La descripción no puede exceder los {MaxLength} caracteres.");
+            .NotEmpty().WithMessage(ValidationMessagesResources.DescriptionMandatory)
+            .MaximumLength(500).WithMessage(ValidationMessagesResources.DescriptionMaxLength);
 
         RuleFor(x => x.Price)
-            .GreaterThan(0).WithMessage("El precio debe ser mayor a cero.");
+            .GreaterThan(0).WithMessage(ValidationMessagesResources.PriceGreaterThanZero);
     }
 }
