@@ -2,6 +2,7 @@ namespace TektonChallengeProducts.Application.Tests.UseCases.CreateProduct;
 
 using Moq;
 using NUnit.Framework;
+using Application.Resources;
 using Application.UseCases.CreateProduct;
 using Application.UseCases.Validators;
 using Domain.Abstractions.Persistence;
@@ -18,6 +19,32 @@ public class CreateProductTests
     {
         mockProductRepository = new Mock<IProductRepository>();
         mockUnitOfWork = new Mock<IUnitOfWork>();
+    }
+
+    [Test]
+    public void Handle_ShouldThrowValidationException_WhenCommandIsInvalid()
+    {
+        // Arrange
+        mockProductRepository.SetupGet(repo => repo.UnitOfWork)
+                             .Returns(mockUnitOfWork.Object);
+        mockProductRepository.Setup(repo => repo.CreateAsync(It.IsAny<Product>(), It.IsAny<CancellationToken>()))
+                             .Returns(Task.CompletedTask);
+        mockUnitOfWork.Setup(unit => unit.CommitAsync(It.IsAny<CancellationToken>()))
+                      .ReturnsAsync(1);
+
+        var commandValidator = new CreateOrUpdateProductCommandValidator();
+        var command = new CreateProductCommand(Status.Active, 10, "", 100);
+
+        var handler = new CreateProductCommandHandler(mockProductRepository.Object, commandValidator);
+
+        // Act
+        var ex = Assert.ThrowsAsync<FluentValidation.ValidationException>(async () =>
+        {
+            await handler.Handle(command, default);
+        });
+
+        Assert.That(ex, Is.Not.Null);
+        Assert.That(ex!.Message, Does.Contain(ValidationMessagesResources.DescriptionMandatory));
     }
 
     [Test]
