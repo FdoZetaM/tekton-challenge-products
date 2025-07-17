@@ -24,7 +24,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services
-       .AddApplication()
+       .AddApplication(typeof(Program).Assembly)
        .AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
