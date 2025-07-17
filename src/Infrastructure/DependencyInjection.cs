@@ -15,7 +15,7 @@ public static class DependencyInjection
             options => options.UseSqlServer(configuration.GetConnectionString("SqlConnection")!)
         );
 
-        services.AddScoped<IUnitOfWork, EntityFrameworkUnitOfWork>();
+        services.AddScoped<IUnitOfWork>(provider => provider.GetRequiredService<EntityFrameworkUnitOfWork>());
         services.AddScoped<IProductRepository, ProductRepository>();
 
         return services;
