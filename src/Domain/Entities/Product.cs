@@ -5,17 +5,19 @@ using Domain.Entities.Base;
 
 public class Product : Entity<Guid>
 {
-    public Product( Status status,
+    private const decimal percentageConverter = 100m;
+
+    public Product(Status status,
                     int stock,
                     string description,
                     decimal price,
-                    decimal discountPercentage ) : base(Guid.NewGuid())
+                    decimal discountPercentage) : base(Guid.NewGuid())
     {
         this.Status = status;
         this.Stock = stock;
         this.Description = description;
         this.Price = price;
-        this.DiscountPercentage = discountPercentage;
+        this.DiscountPercentage = discountPercentage / percentageConverter;
     }
 
     public Status Status { get; private set; }
