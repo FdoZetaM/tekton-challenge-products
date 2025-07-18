@@ -19,6 +19,11 @@ public class ProductsEntityConfiguration : IEntityTypeConfiguration<Product>
         builder.Property(p => p.Id)
                .HasColumnOrder(columnOrder++);
 
+       builder.Property(p => p.Name)
+              .HasColumnOrder(columnOrder++)
+              .IsRequired()
+              .HasMaxLength(100);
+
         builder.Property(p => p.Status)
                .HasColumnOrder(columnOrder++)
                .IsRequired();
@@ -42,5 +47,5 @@ public class ProductsEntityConfiguration : IEntityTypeConfiguration<Product>
                .IsRequired()
                .HasColumnType("tinyint")
                .HasDefaultValue(0);
-       }
+    }
 }

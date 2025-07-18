@@ -12,7 +12,7 @@ using TektonChallengeProducts.Infrastructure.Persistence.Sql;
 namespace TektonChallengeProducts.Infrastructure.Migrations
 {
     [DbContext(typeof(EntityFrameworkUnitOfWork))]
-    [Migration("20250718005512_FirstMigration")]
+    [Migration("20250718014715_FirstMigration")]
     partial class FirstMigration
     {
         /// <inheritdoc />
@@ -36,26 +36,32 @@ namespace TektonChallengeProducts.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)")
-                        .HasColumnOrder(3);
+                        .HasColumnOrder(4);
 
                     b.Property<byte>("DiscountPercentage")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("tinyint")
                         .HasDefaultValue((byte)0)
-                        .HasColumnOrder(5);
+                        .HasColumnOrder(6);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnOrder(1);
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)")
-                        .HasColumnOrder(4);
+                        .HasColumnOrder(5);
 
                     b.Property<int>("Status")
                         .HasColumnType("int")
-                        .HasColumnOrder(1);
+                        .HasColumnOrder(2);
 
                     b.Property<int>("Stock")
                         .HasMaxLength(100)
                         .HasColumnType("int")
-                        .HasColumnOrder(2);
+                        .HasColumnOrder(3);
 
                     b.HasKey("Id")
                         .HasName("PK_Products");
