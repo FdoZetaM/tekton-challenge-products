@@ -25,6 +25,12 @@ public class CreateProductTests
     public void Handle_ShouldThrowValidationException_WhenCommandIsInvalid()
     {
         // Arrange
+        string name = "Test Product";
+        Status status = Status.Active;
+        int stock = 10;
+        string description = "Test Description";
+        decimal price = 100m;
+
         mockProductRepository.SetupGet(repo => repo.UnitOfWork)
                              .Returns(mockUnitOfWork.Object);
         mockProductRepository.Setup(repo => repo.CreateAsync(It.IsAny<Product>(), It.IsAny<CancellationToken>()))
@@ -33,7 +39,7 @@ public class CreateProductTests
                       .ReturnsAsync(1);
 
         var commandValidator = new CreateOrUpdateProductCommandValidator();
-        var command = new CreateProductCommand(Status.Active, 10, "", 100);
+        var command = new CreateProductCommand(name, status, stock, description, price);
 
         var handler = new CreateProductCommandHandler(mockProductRepository.Object, commandValidator);
 
@@ -51,6 +57,12 @@ public class CreateProductTests
     public async Task Handle_ShouldCreateProductAndReturnId()
     {
         // Arrange
+        string name = "Test Product";
+        Status status = Status.Inactive;
+        int stock = 50;
+        string description = "Test Description";
+        decimal price = 1500m;
+
         mockProductRepository.SetupGet(repo => repo.UnitOfWork)
                              .Returns(mockUnitOfWork.Object);
         mockProductRepository.Setup(repo => repo.CreateAsync(It.IsAny<Product>(), It.IsAny<CancellationToken>()))
@@ -59,7 +71,7 @@ public class CreateProductTests
                       .ReturnsAsync(1);
 
         var validator = new CreateOrUpdateProductCommandValidator();
-        var command = new CreateProductCommand(Status.Active, 10, "desc", 100);
+        var command = new CreateProductCommand(name, status, stock, description, price);
 
         var handler = new CreateProductCommandHandler(mockProductRepository.Object, validator);
 

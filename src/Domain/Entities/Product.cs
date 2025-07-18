@@ -5,16 +5,20 @@ using Domain.Entities.Base;
 
 public class Product : Entity<Guid>
 {
-    public Product(Status status,
+    public Product(string name,
+                    Status status,
                     int stock,
                     string description,
                     decimal price) : base(Guid.NewGuid())
     {
+        this.Name = name;
         this.Status = status;
         this.Stock = stock;
         this.Description = description;
         this.Price = price;
     }
+
+    public string Name { get; private set; }
 
     public Status Status { get; private set; }
 

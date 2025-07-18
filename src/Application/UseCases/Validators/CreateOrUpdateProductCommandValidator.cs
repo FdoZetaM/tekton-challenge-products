@@ -8,6 +8,10 @@ public class CreateOrUpdateProductCommandValidator : AbstractValidator<CreatePro
 {
     public CreateOrUpdateProductCommandValidator()
     {
+        RuleFor(x => x.Name)
+            .NotEmpty().WithMessage(ValidationMessagesResources.NameMandatory)
+            .MaximumLength(100).WithMessage(ValidationMessagesResources.NameMaxLength);
+
         RuleFor(x => x.Stock)
             .GreaterThanOrEqualTo(0)
             .WithMessage(ValidationMessagesResources.StockCantBeNegative);

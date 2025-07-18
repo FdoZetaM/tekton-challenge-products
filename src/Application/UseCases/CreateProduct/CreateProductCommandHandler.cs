@@ -31,6 +31,7 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
         byte discountPercentage = 10;
 
         var product = new Product(
+            request.Name,
             request.Status,
             request.Stock,
             request.Description,

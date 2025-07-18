@@ -21,6 +21,7 @@ public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, P
         return new ProductResponse
         {
             Id = product.Id,
+            Name = product.Name,
             Status = product.Status.ToString(),
             Stock = product.Stock,
             Description = product.Description,
