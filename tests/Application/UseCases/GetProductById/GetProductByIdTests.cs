@@ -2,6 +2,7 @@ namespace TektonChallengeProducts.Application.Tests.UseCases.GetProductById;
 
 using Moq;
 using NUnit.Framework;
+using Application.Resources;
 using Application.UseCases.GetProductById;
 using Domain.Abstractions.Persistence;
 using Domain.Abstractions.Services;
@@ -37,6 +38,68 @@ public class GetProductByIdTests
         // Assert
         Assert.That(result, Is.Null);
     }
+
+    [Test]
+    public void Handle_ShouldThrowException_WhenDictionaryIsNotCached()
+    {
+        // Arrange
+        string name = "Test Product";
+        Status status = Status.Active;
+        int stock = 5;
+        string description = "Test Product";
+        decimal price = 100m;
+        byte discount = 10;
+
+        var product = new Product(name, status, stock, description, price);
+        product.SetDiscountPercentage(discount);
+
+        mockProductRepository.Setup(repo => repo.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+                             .ReturnsAsync(product);
+
+        mockCacheService.Setup(cache => cache.GetAsync<Dictionary<Status, string>>(It.IsAny<string>()))
+                        .ReturnsAsync((Dictionary<Status, string>?)null);
+
+        var handler = new GetProductByIdQueryHandler(mockProductRepository.Object, mockCacheService.Object);
+        var query = new GetProductByIdQuery(Guid.NewGuid());
+
+        // Act & Assert
+        var ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await handler.Handle(query, default));
+        Assert.That(ex!.Message, Is.EqualTo(ValidationMessagesResources.StatusDictionaryNotCached));
+    }
+
+    [Test]
+    public void Handle_ShouldThrowException_WhenCacheThrows()
+    {
+        // Arrange
+        string name = "Test Product";
+        Status status = Status.Active;
+        int stock = 5;
+        string description = "Test Product";
+        decimal price = 100m;
+        byte discount = 10;
+
+        var product = new Product(name, status, stock, description, price);
+        product.SetDiscountPercentage(discount);
+
+        mockProductRepository.Setup(repo => repo.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+                             .ReturnsAsync(product);
+
+        var statusDict = new Dictionary<Status, string>
+        {
+           { Status.Inactive, "Inactive" }
+        };
+
+        mockCacheService.Setup(cache => cache.GetAsync<Dictionary<Status, string>>(It.IsAny<string>()))
+                        .ReturnsAsync(statusDict);
+
+        var handler = new GetProductByIdQueryHandler(mockProductRepository.Object, mockCacheService.Object);
+        var query = new GetProductByIdQuery(Guid.NewGuid());
+
+        // Act & Assert
+        var ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await handler.Handle(query, default));
+        Assert.That(ex!.Message, Is.EqualTo(string.Format(ValidationMessagesResources.StatusNotFoundInCache, product.Status)));
+    }
+
 
     [Test]
     public async Task Handle_ShouldReturnProductResponse_WhenProductExists()
