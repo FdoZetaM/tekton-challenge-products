@@ -8,16 +8,19 @@ using Application.UseCases.Validators;
 using Domain.Abstractions.Persistence;
 using Domain.Enums;
 using Domain.Entities;
+using TektonChallengeProducts.Application.Services;
 
 [TestFixture]
 public class CreateProductTests
 {
     private readonly Mock<IProductRepository> mockProductRepository;
+    private readonly Mock<IDiscountService> mockDiscountService;
     private readonly Mock<IUnitOfWork> mockUnitOfWork;
 
     public CreateProductTests()
     {
         mockProductRepository = new Mock<IProductRepository>();
+        mockDiscountService = new Mock<IDiscountService>();
         mockUnitOfWork = new Mock<IUnitOfWork>();
     }
 
@@ -41,7 +44,9 @@ public class CreateProductTests
         var commandValidator = new CreateOrUpdateProductCommandValidator();
         var command = new CreateProductCommand(name, status, stock, description, price);
 
-        var handler = new CreateProductCommandHandler(mockProductRepository.Object, commandValidator);
+        var handler = new CreateProductCommandHandler(mockProductRepository.Object,
+                                                      mockDiscountService.Object,
+                                                      commandValidator);
 
         // Act
         var ex = Assert.ThrowsAsync<FluentValidation.ValidationException>(async () =>
@@ -52,6 +57,38 @@ public class CreateProductTests
         Assert.That(ex, Is.Not.Null);
         Assert.That(ex!.Message, Does.Contain(ValidationMessagesResources.DescriptionMandatory));
     }
+
+    [Test]
+    public void Handle_ShouldThrowException_WhenDiscountIsOutOfRange()
+    {
+        // Arrange
+        string name = "Test Product";
+        Status status = Status.Active;
+        int stock = 10;
+        string description = "Test Description";
+        decimal price = 100m;
+
+        mockDiscountService.Setup(s => s.GetDiscountToApplyAsync())
+                           .ReturnsAsync((byte)150);
+
+        mockProductRepository.SetupGet(repo => repo.UnitOfWork)
+                             .Returns(mockUnitOfWork.Object);
+        mockProductRepository.Setup(repo => repo.CreateAsync(It.IsAny<Product>(), It.IsAny<CancellationToken>()))
+                             .Returns(Task.CompletedTask);
+        mockUnitOfWork.Setup(unit => unit.CommitAsync(It.IsAny<CancellationToken>()))
+                      .ReturnsAsync(1);
+
+        var commandValidator = new CreateOrUpdateProductCommandValidator();
+        var command = new CreateProductCommand(name, status, stock, description, price);
+
+        var handler = new CreateProductCommandHandler(mockProductRepository.Object, mockDiscountService.Object, commandValidator);
+
+        // Act & Assert
+        var ex = Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await handler.Handle(command, default));
+        Assert.That(ex, Is.Not.Null);
+        Assert.That(ex!.Message, Does.Contain("Discount percentage must be between 0 and 10"));
+    }
+
 
     [Test]
     public async Task Handle_ShouldCreateProductAndReturnId()
@@ -73,7 +110,9 @@ public class CreateProductTests
         var validator = new CreateOrUpdateProductCommandValidator();
         var command = new CreateProductCommand(name, status, stock, description, price);
 
-        var handler = new CreateProductCommandHandler(mockProductRepository.Object, validator);
+        var handler = new CreateProductCommandHandler(mockProductRepository.Object,
+                                                      mockDiscountService.Object,
+                                                      validator);
 
         // Act
         var result = await handler.Handle(command, default);
