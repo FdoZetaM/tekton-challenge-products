@@ -20,7 +20,7 @@ namespace TektonChallengeProducts.Infrastructure.Migrations
                     Stock = table.Column<int>(type: "int", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    DiscountPercentage = table.Column<decimal>(type: "decimal(4,3)", nullable: false)
+                    DiscountPercentage = table.Column<byte>(type: "tinyint", nullable: false, defaultValue: (byte)0)
                 },
                 constraints: table =>
                 {

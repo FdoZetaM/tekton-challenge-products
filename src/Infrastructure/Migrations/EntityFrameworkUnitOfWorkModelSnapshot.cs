@@ -35,8 +35,10 @@ namespace TektonChallengeProducts.Infrastructure.Migrations
                         .HasColumnType("nvarchar(500)")
                         .HasColumnOrder(3);
 
-                    b.Property<decimal>("DiscountPercentage")
-                        .HasColumnType("decimal(4,3)")
+                    b.Property<byte>("DiscountPercentage")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint")
+                        .HasDefaultValue((byte)0)
                         .HasColumnOrder(5);
 
                     b.Property<decimal>("Price")

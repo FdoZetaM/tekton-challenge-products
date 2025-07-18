@@ -40,6 +40,7 @@ public class ProductsEntityConfiguration : IEntityTypeConfiguration<Product>
         builder.Property(p => p.DiscountPercentage)
                .HasColumnOrder(columnOrder++)
                .IsRequired()
-               .HasColumnType("decimal(4,3)");
-    }
+               .HasColumnType("tinyint")
+               .HasDefaultValue(0);
+       }
 }

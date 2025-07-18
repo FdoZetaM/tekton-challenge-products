@@ -12,7 +12,7 @@ using TektonChallengeProducts.Infrastructure.Persistence.Sql;
 namespace TektonChallengeProducts.Infrastructure.Migrations
 {
     [DbContext(typeof(EntityFrameworkUnitOfWork))]
-    [Migration("20250716034321_FirstMigration")]
+    [Migration("20250718005512_FirstMigration")]
     partial class FirstMigration
     {
         /// <inheritdoc />
@@ -38,8 +38,10 @@ namespace TektonChallengeProducts.Infrastructure.Migrations
                         .HasColumnType("nvarchar(500)")
                         .HasColumnOrder(3);
 
-                    b.Property<decimal>("DiscountPercentage")
-                        .HasColumnType("decimal(4,3)")
+                    b.Property<byte>("DiscountPercentage")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint")
+                        .HasDefaultValue((byte)0)
                         .HasColumnOrder(5);
 
                     b.Property<decimal>("Price")

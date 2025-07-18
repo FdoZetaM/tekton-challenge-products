@@ -28,15 +28,16 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
             throw new ValidationException($"{ValidationMessagesResources.ValidationErrors}: {errors}");
         }
 
-        decimal discountPercentage = 10;
+        byte discountPercentage = 10;
 
         var product = new Product(
             request.Status,
             request.Stock,
             request.Description,
-            request.Price,
-            discountPercentage
+            request.Price
         );
+
+        product.SetDiscountPercentage(discountPercentage);
 
         await productRepository.CreateAsync(product, cancellationToken);
         await productRepository.UnitOfWork.CommitAsync(cancellationToken);
