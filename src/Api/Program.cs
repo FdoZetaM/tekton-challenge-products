@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc;
+using TektonChallengeProducts.Api.Middlewares;
 using TektonChallengeProducts.Application;
 using TektonChallengeProducts.Infrastructure;
 using Json = System.Text.Json;
@@ -37,6 +38,7 @@ if ( app.Environment.IsDevelopment() )
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseHttpsRedirection();
 
 app.MapControllers();
