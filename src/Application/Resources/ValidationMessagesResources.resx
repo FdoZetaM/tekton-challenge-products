@@ -123,6 +123,15 @@
   <data name="DescriptionMaxLength" xml:space="preserve">
     <value>The description cannot exceed {MaxLength} characters.</value>
   </data>
+  <data name="InvalidOrMissingId" xml:space="preserve">
+    <value>The Id is invalid or missing.</value>
+  </data>
+  <data name="NameMandatory" xml:space="preserve">
+    <value>Product name is mandatory.</value>
+  </data>
+  <data name="NameMaxLength" xml:space="preserve">
+    <value>The name cannot exceed {MaxLength} characters.</value>
+  </data>
   <data name="PriceGreaterThanZero" xml:space="preserve">
     <value>The price must be greater than zero.</value>
   </data>

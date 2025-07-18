@@ -79,6 +79,33 @@ namespace TektonChallengeProducts.Application.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The Id is invalid or missing..
+        /// </summary>
+        public static string InvalidOrMissingId {
+            get {
+                return ResourceManager.GetString("InvalidOrMissingId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product name is mandatory..
+        /// </summary>
+        public static string NameMandatory {
+            get {
+                return ResourceManager.GetString("NameMandatory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The name cannot exceed {MaxLength} characters..
+        /// </summary>
+        public static string NameMaxLength {
+            get {
+                return ResourceManager.GetString("NameMaxLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The price must be greater than zero..
         /// </summary>
         public static string PriceGreaterThanZero {

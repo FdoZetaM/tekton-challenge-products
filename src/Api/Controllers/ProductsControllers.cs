@@ -3,6 +3,7 @@ namespace TektonChallengeProducts.Api.Controllers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Api.Controllers.Common;
+using Application.Resources;
 using Application.UseCases.CreateProduct;
 using Application.UseCases.GetProductById;
 
@@ -24,7 +25,7 @@ public class ProductsController(IMediator mediator) : TektonChallengeBaseControl
     {
         if (!Guid.TryParse(id, out var guid))
         {
-            return Results.BadRequest("Id inválido");
+            return Results.BadRequest(ValidationMessagesResources.InvalidOrMissingId);
         }
 
         var product = await mediator.Send(new GetProductByIdQuery(guid));
