@@ -28,7 +28,7 @@ public class CreateProductTests
         string name = "Test Product";
         Status status = Status.Active;
         int stock = 10;
-        string description = "Test Description";
+        string description = "";
         decimal price = 100m;
 
         mockProductRepository.SetupGet(repo => repo.UnitOfWork)

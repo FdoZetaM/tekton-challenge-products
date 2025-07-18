@@ -4,6 +4,7 @@ using Moq;
 using NUnit.Framework;
 using Application.UseCases.GetProductById;
 using Domain.Abstractions.Persistence;
+using Domain.Abstractions.Services;
 using Domain.Entities;
 using Domain.Enums;
 
@@ -11,10 +12,12 @@ using Domain.Enums;
 public class GetProductByIdTests
 {
     private readonly Mock<IProductRepository> mockProductRepository;
+    private readonly Mock<ICacheService> mockCacheService;
 
     public GetProductByIdTests()
     {
         mockProductRepository = new Mock<IProductRepository>();
+        mockCacheService = new Mock<ICacheService>();
     }
 
     [Test]
@@ -25,7 +28,7 @@ public class GetProductByIdTests
         mockProductRepository.Setup(repo => repo.GetByIdAsync(productId, It.IsAny<CancellationToken>()))
                              .ReturnsAsync((Product?)null);
 
-        var handler = new GetProductByIdQueryHandler(mockProductRepository.Object);
+        var handler = new GetProductByIdQueryHandler(mockProductRepository.Object, mockCacheService.Object);
         var query = new GetProductByIdQuery(productId);
 
         // Act
@@ -52,7 +55,15 @@ public class GetProductByIdTests
         mockProductRepository.Setup(repo => repo.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
                              .ReturnsAsync(product);
 
-        var handler = new GetProductByIdQueryHandler(mockProductRepository.Object);
+        var statusDict = new Dictionary<Status, string>
+        {
+            { Status.Active, "Active" },
+            { Status.Inactive, "Inactive" }
+        };
+        mockCacheService.Setup(cache => cache.GetAsync<Dictionary<Status, string>>(It.IsAny<string>()))
+                        .ReturnsAsync(statusDict);
+
+        var handler = new GetProductByIdQueryHandler(mockProductRepository.Object, mockCacheService.Object);
         var query = new GetProductByIdQuery(It.IsAny<Guid>());
 
         // Act
@@ -62,7 +73,7 @@ public class GetProductByIdTests
         Assert.That(result, Is.Not.Null);
         Assert.That(result!.Id, Is.Not.Null);
         Assert.That(result.Name, Is.EqualTo(product.Name));
-        Assert.That(result.Status, Is.EqualTo(product.Status.ToString()));
+        Assert.That(result.Status, Is.EqualTo(statusDict[product.Status]));
         Assert.That(result.Stock, Is.EqualTo(product.Stock));
         Assert.That(result.Description, Is.EqualTo(product.Description));
         Assert.That(result.Price, Is.EqualTo(product.Price));
