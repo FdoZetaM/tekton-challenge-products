@@ -14,6 +14,8 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfigurationManager configuration)
     {
+        services.AddSingleton<ILoggerService, LoggerService>();
+
         services.AddCacheService();
 
         services.AddDbContext<EntityFrameworkUnitOfWork>(

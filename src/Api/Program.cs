@@ -38,6 +38,7 @@ if ( app.Environment.IsDevelopment() )
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<RequestTimingMiddleware>();
 app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseHttpsRedirection();
 
