@@ -3,18 +3,22 @@ namespace TektonChallengeProducts.Application.UseCases.CreateProduct;
 using FluentValidation;
 using MediatR;
 using Application.Resources;
+using Application.Services;
 using Domain.Abstractions.Persistence;
 using Domain.Entities;
 
 public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, Guid>
 {
     private readonly IProductRepository productRepository;
+    private readonly IDiscountService discountService;
     private readonly IValidator<CreateProductCommand> validator;
 
     public CreateProductCommandHandler(IProductRepository productRepository,
+                                       IDiscountService discountService,
                                        IValidator<CreateProductCommand> validator)
     {
         this.productRepository = productRepository;
+        this.discountService = discountService;
         this.validator = validator;
     }
 
@@ -28,7 +32,7 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
             throw new ValidationException($"{ValidationMessagesResources.ValidationErrors}: {errors}");
         }
 
-        byte discountPercentage = 10;
+        byte discountPercentage = await discountService.GetDiscountToApplyAsync();
 
         var product = new Product(
             request.Name,

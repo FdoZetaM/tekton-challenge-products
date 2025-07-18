@@ -3,6 +3,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Application.Services;
 using Domain.Abstractions.Persistence;
 using Domain.Abstractions.Services;
 using Infrastructure.Persistence.Sql;
@@ -21,6 +22,14 @@ public static class DependencyInjection
 
         services.AddScoped<IUnitOfWork>(provider => provider.GetRequiredService<EntityFrameworkUnitOfWork>());
         services.AddScoped<IProductRepository, ProductRepository>();
+
+        services.AddHttpClient();
+        services.AddScoped<IDiscountService, DiscountService>(provider =>
+        {
+            var httpClientFactory = provider.GetRequiredService<IHttpClientFactory>();
+            var configuration = provider.GetRequiredService<IConfiguration>();
+            return new DiscountService(httpClientFactory, configuration);
+        });
 
         return services;
     }
