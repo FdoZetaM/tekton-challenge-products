@@ -115,7 +115,25 @@ namespace TektonChallengeProducts.Application.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to El stock no puede ser negativo..
+        ///   Looks up a localized string similar to Status dictionary not found in cache..
+        /// </summary>
+        public static string StatusDictionaryNotCached {
+            get {
+                return ResourceManager.GetString("StatusDictionaryNotCached", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status &apos;{0}&apos; not found in cache..
+        /// </summary>
+        public static string StatusNotFoundInCache {
+            get {
+                return ResourceManager.GetString("StatusNotFoundInCache", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The stock cannot be negative..
         /// </summary>
         public static string StockCantBeNegative {
             get {

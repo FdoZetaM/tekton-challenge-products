@@ -135,8 +135,14 @@
   <data name="PriceGreaterThanZero" xml:space="preserve">
     <value>The price must be greater than zero.</value>
   </data>
+  <data name="StatusDictionaryNotCached" xml:space="preserve">
+    <value>Status dictionary not found in cache.</value>
+  </data>
+  <data name="StatusNotFoundInCache" xml:space="preserve">
+    <value>Status '{0}' not found in cache.</value>
+  </data>
   <data name="StockCantBeNegative" xml:space="preserve">
-    <value>El stock no puede ser negativo.</value>
+    <value>The stock cannot be negative.</value>
   </data>
   <data name="ValidationErrors" xml:space="preserve">
     <value>Validation errors</value>
