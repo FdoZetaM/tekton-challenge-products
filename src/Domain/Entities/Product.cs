@@ -39,4 +39,17 @@ public class Product : Entity<Guid>
 
         this.DiscountPercentage = discountPercentage;
     }
+
+    public void Update(string name,
+                       Status status,
+                       int stock,
+                       string description,
+                       decimal price)
+    {
+        Name = name;
+        Status = status;
+        Stock = stock;
+        Description = description;
+        Price = price;
+    }
 }

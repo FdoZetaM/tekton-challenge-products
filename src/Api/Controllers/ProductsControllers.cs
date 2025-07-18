@@ -6,6 +6,7 @@ using Api.Controllers.Common;
 using Application.Resources;
 using Application.UseCases.CreateProduct;
 using Application.UseCases.GetProductById;
+using Application.UseCases.UpdateProduct;
 
 [ApiController]
 [ApiVersion("1.0")]
@@ -34,5 +35,19 @@ public class ProductsController(IMediator mediator) : TektonChallengeBaseControl
             return Results.NotFound();
 
         return Results.Ok(product);
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IResult> UpdateProductAsync([FromRoute] string id,
+                                                  [FromBody] UpdateProductCommand command)
+    {
+        if (!Guid.TryParse(id, out var guid) || guid != command.Id)
+        {
+            return Results.BadRequest(ValidationMessagesResources.InvalidOrMissingId);
+        }
+
+        await mediator.Send(command);
+
+        return Results.NoContent();
     }
 }

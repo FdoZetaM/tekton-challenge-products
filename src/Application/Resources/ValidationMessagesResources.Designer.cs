@@ -115,6 +115,15 @@ namespace TektonChallengeProducts.Application.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Product not found..
+        /// </summary>
+        public static string ProductNotFound {
+            get {
+                return ResourceManager.GetString("ProductNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Status dictionary not found in cache..
         /// </summary>
         public static string StatusDictionaryNotCached {

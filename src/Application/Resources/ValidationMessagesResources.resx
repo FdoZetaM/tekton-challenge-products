@@ -135,6 +135,9 @@
   <data name="PriceGreaterThanZero" xml:space="preserve">
     <value>The price must be greater than zero.</value>
   </data>
+  <data name="ProductNotFound" xml:space="preserve">
+    <value>Product not found.</value>
+  </data>
   <data name="StatusDictionaryNotCached" xml:space="preserve">
     <value>Status dictionary not found in cache.</value>
   </data>
