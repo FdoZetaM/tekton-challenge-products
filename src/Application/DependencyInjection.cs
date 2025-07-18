@@ -17,7 +17,7 @@ public static class DependencyInjection
 
     private static void AddValidators(this IServiceCollection services)
     {
-        services.AddScoped<FluentValidation.IValidator<CreateProductCommand>, CreateOrUpdateProductCommandValidator>();
+        services.AddScoped<FluentValidation.IValidator<CreateProductCommand>, ProductCommandValidator>();
     }
 
     private static void AddMediatR(this IServiceCollection services, Assembly assembly)

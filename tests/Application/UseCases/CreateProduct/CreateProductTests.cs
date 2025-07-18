@@ -41,7 +41,7 @@ public class CreateProductTests
         mockUnitOfWork.Setup(unit => unit.CommitAsync(It.IsAny<CancellationToken>()))
                       .ReturnsAsync(1);
 
-        var commandValidator = new CreateOrUpdateProductCommandValidator();
+        var commandValidator = new ProductCommandValidator();
         var command = new CreateProductCommand(name, status, stock, description, price);
 
         var handler = new CreateProductCommandHandler(mockProductRepository.Object,
@@ -78,7 +78,7 @@ public class CreateProductTests
         mockUnitOfWork.Setup(unit => unit.CommitAsync(It.IsAny<CancellationToken>()))
                       .ReturnsAsync(1);
 
-        var commandValidator = new CreateOrUpdateProductCommandValidator();
+        var commandValidator = new ProductCommandValidator();
         var command = new CreateProductCommand(name, status, stock, description, price);
 
         var handler = new CreateProductCommandHandler(mockProductRepository.Object, mockDiscountService.Object, commandValidator);
@@ -107,7 +107,7 @@ public class CreateProductTests
         mockUnitOfWork.Setup(unit => unit.CommitAsync(It.IsAny<CancellationToken>()))
                       .ReturnsAsync(1);
 
-        var validator = new CreateOrUpdateProductCommandValidator();
+        var validator = new ProductCommandValidator();
         var command = new CreateProductCommand(name, status, stock, description, price);
 
         var handler = new CreateProductCommandHandler(mockProductRepository.Object,

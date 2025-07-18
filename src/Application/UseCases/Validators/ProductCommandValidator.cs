@@ -2,11 +2,11 @@ namespace TektonChallengeProducts.Application.UseCases.Validators;
 
 using FluentValidation;
 using Application.Resources;
-using Application.UseCases.CreateProduct;
+using Application.UseCases.Common;
 
-public class CreateOrUpdateProductCommandValidator : AbstractValidator<CreateProductCommand>
+public class ProductCommandValidator : AbstractValidator<ProductCommandBase>
 {
-    public CreateOrUpdateProductCommandValidator()
+    public ProductCommandValidator()
     {
         RuleFor(x => x.Name)
             .NotEmpty().WithMessage(ValidationMessagesResources.NameMandatory)
