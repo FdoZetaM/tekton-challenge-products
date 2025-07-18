@@ -1,0 +1,168 @@
+{
+	"info": {
+		"_postman_id": "e0888de7-6ec7-4778-afbc-1a8932cbe72c",
+		"name": "Tekton Challenge Products",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39441957"
+	},
+	"item": [
+		{
+			"name": "Create Product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var guid = pm.response.text().trim();\r",
+							"\r",
+							"guid = guid.replace(/^\"|\"$/g, '');\r",
+							"\r",
+							"pm.environment.set(\"productId\", guid);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Producto de prueba\",\r\n    \"status\": 0,\r\n    \"stock\": 50,\r\n    \"description\": \"Descripción OK\",\r\n    \"price\": 85000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{tektonChallengeProductsUrl}}/api/v1/products",
+					"host": [
+						"{{tektonChallengeProductsUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Product by Id",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					}
+				],
+				"url": {
+					"raw": "{{tektonChallengeProductsUrl}}/api/v1/products/{{productId}}",
+					"host": [
+						"{{tektonChallengeProductsUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"products",
+						"{{productId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Product",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"68b148ed-6ec4-4563-9793-58db1020c3c9\",\n    \"name\": \"Producto de prueba modificado\",\n    \"status\": 1,\n    \"stock\": 75,\n    \"description\": \"Descripción OK\",\n    \"price\": 95000.00\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5325/api/v1/products/68b148ed-6ec4-4563-9793-58db1020c3c0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5325",
+					"path": [
+						"api",
+						"v1",
+						"products",
+						"68b148ed-6ec4-4563-9793-58db1020c3c0"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "tektonChallengeProductsUrl",
+			"value": "http://localhost:5325",
+			"type": "string"
+		},
+		{
+			"key": "productId",
+			"value": "2d61a0d4-6ac3-418f-9189-e588683baa78",
+			"type": "string"
+		}
+	]
+}
