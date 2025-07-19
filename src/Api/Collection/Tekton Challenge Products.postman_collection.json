@@ -17,7 +17,7 @@
 							"\r",
 							"guid = guid.replace(/^\"|\"$/g, '');\r",
 							"\r",
-							"pm.environment.set(\"productId\", guid);"
+							"pm.collectionVariables.set(\"productId\", guid);"
 						],
 						"type": "text/javascript",
 						"packages": {}
