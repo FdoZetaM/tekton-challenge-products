@@ -6,30 +6,38 @@ using Application.Services;
 
 public class LoggerService : ILoggerService
 {
-    private const string logFilePath= "logs/requests.txt";
+    private readonly string logFilePath;
+    private readonly object lockObject = new();
 
     public LoggerService()
     {
-        if (!File.Exists(logFilePath))
+        string currentDirectory = Directory.GetCurrentDirectory();
+        string logDirectory = Path.Combine(currentDirectory, "logs");
+        logFilePath = Path.Combine(logDirectory, "requests.txt");
+
+        if (!Directory.Exists(logDirectory))
         {
-            File.Create(logFilePath).Close();
+            Directory.CreateDirectory(logDirectory);
         }
     }
 
     public void LogInformation(string message)
     {
-        string timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        string timestamp = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss");
 
         string logEntry = $"[{timestamp}] [INFO] {message}";
 
-        try
+        lock (lockObject)
         {
-            using StreamWriter writer = new(logFilePath, true);
-            writer.WriteLine(logEntry);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("Error al escribir en el archivo de log: " + ex.Message);
+            try
+            {
+                using StreamWriter writer = new(logFilePath, true);
+                writer.WriteLine(logEntry);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al escribir en el archivo de log: " + ex.Message);
+            }
         }
     }
 }
