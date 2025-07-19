@@ -33,7 +33,7 @@ public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, P
         {
             Id = product.Id,
             Name = product.Name,
-            Status = status,
+            StatusName = status,
             Stock = product.Stock,
             Description = product.Description,
             Price = product.Price,

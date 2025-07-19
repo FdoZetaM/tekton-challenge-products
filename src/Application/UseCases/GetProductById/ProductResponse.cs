@@ -6,7 +6,7 @@ public record ProductResponse
 
     public Guid Id { get; init; }
     public string Name { get; init; } = string.Empty;
-    public string Status { get; init; } = string.Empty;
+    public string StatusName { get; init; } = string.Empty;
     public int Stock { get; init; }
     public string Description { get; init; } = string.Empty;
     public decimal Price { get; init; }

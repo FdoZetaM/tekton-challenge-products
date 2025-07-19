@@ -136,7 +136,7 @@ public class GetProductByIdTests
         Assert.That(result, Is.Not.Null);
         Assert.That(result!.Id, Is.Not.Null);
         Assert.That(result.Name, Is.EqualTo(product.Name));
-        Assert.That(result.Status, Is.EqualTo(statusDict[product.Status]));
+        Assert.That(result.StatusName, Is.EqualTo(statusDict[product.Status]));
         Assert.That(result.Stock, Is.EqualTo(product.Stock));
         Assert.That(result.Description, Is.EqualTo(product.Description));
         Assert.That(result.Price, Is.EqualTo(product.Price));
